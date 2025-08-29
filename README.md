@@ -8,7 +8,7 @@
 
 ** Transform your AI development workflow with structured context management and automated documentation.**
 
-**🎉 NEW: `ccd-cli` is now available on PyPI! Install with `pip install ccd-cli` and start using CCD methodology immediately.**
+
 
 [![Documentation](https://img.shields.io/badge/docs-mkdocs-blue)](https://github.com/yegorferrieres/ccd-ai)
 [![CI Status](https://img.shields.io/badge/CI-validating%20context-green)](https://github.com/yegorferrieres/ccd-ai/actions)
@@ -17,27 +17,19 @@
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](https://github.com/yegorferrieres/ccd-ai)
 [![PyPI](https://img.shields.io/badge/PyPI-ccd--cli-blue)](https://pypi.org/project/ccd-cli/)
 
-## 🚀 Quick Install
-
-```bash
-pip install ccd-cli
-```
-
-**✅ Package successfully published to PyPI!**  
-You can now install `ccd-cli` directly from PyPI and start using CCD methodology immediately.
 
 ## Key Features
 
 - ** AI-CONTEXT Integration**: Direct context access in source code
 - ** Methodology Loop**: Automated project planning and decision tracking
 - ** Quality Gates**: Comprehensive validation and health monitoring
-- ** CLI Tools**: Command-line interface for automation (Available on PyPI)
+- ** CLI Tools**: Command-line interface for automation
 - ** Four-Tier Architecture**: Repository → Module → File → Code level context
 - ** RAG Optimization**: Enhanced AI tool performance with structured context
 
-## Five-Minute Adoption
+## Quick Start
 
-### 1. Install CCD for AI CLI
+### Install ccd-cli
 ```bash
 # Install from PyPI (Recommended)
 pip install ccd-cli
@@ -48,28 +40,22 @@ cd ccd-ai/tools/ccd-cli
 pip install -e .
 ```
 
-### 2. Initialize in Your Repo
+### Initialize and Use
 ```bash
-cd your-project
-ccd init
-```
+# Initialize a new CCD project
+ccd init --project-name "My Project" --domain "web-application"
 
-### 3. Generate Context
-```bash
+# Generate context cards
 ccd generate-cards --file-types go,py,js,ts
-ccd validate-contexts
-```
 
-### 4. Commit & Deploy
-```bash
-git add contexts/
-git commit -m "feat: add CCD for AI context documentation"
-git push
+# Validate contexts
+ccd validate-contexts
+
+# Check project health
+ccd health
 ```
 
 **That's it!** Your AI tools now have fresh, structured context about your codebase.
-
-> **✅ Package Available**: `ccd-cli` is now available on PyPI! Install with `pip install ccd-cli` for production use.
 
 ## The CCD for AI Loop
 
@@ -170,7 +156,7 @@ AI-CONTEXT comments provide direct access to context documentation from within s
 
 ## Tools & Automation
 
-- **ccd-cli**: Command-line interface for context management with AI-CONTEXT integration (Available on PyPI: `pip install ccd-cli`)
+- **ccd-cli**: Command-line interface for context management with AI-CONTEXT integration
 - **Automated Generation**: Context cards on file changes
 - **AI-CONTEXT Integration**: Direct context links in source code with validation
 - **Methodology Loop**: Automated management of roadmap, engineering log, and ADRs
@@ -202,7 +188,6 @@ AI-CONTEXT comments provide direct access to context documentation from within s
 - **Developer-Friendly**: Minimal overhead, maximum value
 - **Enterprise-Ready**: Scales from startups to large organizations
 - **Open Source**: Community-driven and transparent
-- **Production Ready**: CLI tool available on PyPI for immediate use
 
 ## Benefits of the Methodology Loop
 
@@ -244,23 +229,15 @@ echo "## $(date +%Y-%m-%d) - [Task Description]" >> docs/ENGINEERING_LOG.md
 # Edit docs/DEVELOPMENT_RULES.md
 ```
 
-## Quick Start Examples
+## Examples
 
-### Installation
+### Basic Usage
 ```bash
-# Install from PyPI (Recommended)
-pip install ccd-cli
-
-# Or install from source
-git clone https://github.com/yegorferrieres/ccd-ai.git
-cd ccd-ai/tools/ccd-cli
-pip install -e .
-
 # Verify installation
 ccd --help
 ```
 
-### Generate Context for New Files
+### Generate and Validate Context
 ```bash
 # Generate context cards for all source files
 ccd generate-cards --force
@@ -268,38 +245,26 @@ ccd generate-cards --force
 # Generate for specific file types
 ccd generate-cards --file-types go,py,js
 
-# Generate for specific directories
-ccd generate-cards --paths services/,libs/
+# Validate contexts
+ccd validate
+
+# Check project health
+ccd health
 ```
 
-### Validate Context Health
+### AI-CONTEXT Integration
 ```bash
-# Check overall context health
-ccd health-check
-
-# Validate against schemas
-ccd validate-schemas
-
-# Generate health report
-ccd health-check --report --output health-report.json
-```
-
-### Work with AI-CONTEXT Comments
-```bash
-# Add AI-CONTEXT comments to source files
+# Add context comments to source files
 ccd add-context-comments --file src/main.go --context docs/contexts/files/src/main.go.ctx.md
 
-# Extract AI-CONTEXT comments from source files
+# Extract context comments from source files
 ccd extract-context --file src/main.go
 
-# Validate AI-CONTEXT comment format
-ccd validate-context-comments --file src/main.go --report
-
-# Check context freshness across project
-ccd context-freshness --project .
+# Validate comment format
+ccd validate-context-comments --file src/main.go
 ```
 
-### Work with Methodology Loop
+### Methodology Loop
 ```bash
 # Update engineering log
 ccd update-engineering-log --description "Implemented feature" --impact "Medium"
@@ -314,33 +279,6 @@ ccd create-adr --title "Database Schema Changes" --status "Proposed"
 ccd methodology-status --project-dir .
 ```
 
-### Prepare AI Context
-```bash
-# Prepare complete project context for AI developer
-ccd prepare-context --project-dir . --output task-context.txt
-
-# Preview what would be generated
-ccd prepare-context --dry-run
-
-# Skip architecture sections for faster generation
-ccd prepare-context --no-architecture
-
-# Generate context for specific project directory
-ccd prepare-context --project-dir /path/to/project
-```
-
-### Quality Assurance
-```bash
-# Check context health
-ccd context-health --project . --detailed
-
-# Detect context drift
-ccd drift-detection --project . --output drift-report.json
-
-# Run all quality gates
-ccd quality-gates --project . --output quality-report.json
-```
-
 ### CI/CD Integration
 ```yaml
 # .github/workflows/context-validation.yml
@@ -351,7 +289,7 @@ ccd quality-gates --project . --output quality-report.json
   run: ccd generate-cards --file-types go,py,js,ts
   
 - name: Health Check
-  run: ccd health-check --report
+  run: ccd health
 ```
 
 ## Quality Gates & Validation
@@ -386,7 +324,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Quick Links
 
 - ** [Documentation](docs/)**: Complete methodology guide
-- ** [CCD for AI CLI](tools/ccd-cli/)**: Command-line interface (Available on PyPI: `pip install ccd-cli`)
+- ** [CCD for AI CLI](tools/ccd-cli/)**: Command-line interface
 - ** [PyPI Package](https://pypi.org/project/ccd-cli/)**: Install directly from PyPI
 - ** [Examples](docs/examples/)**: Real-world implementations
 - ** [Research](research/)**: Academic papers and research
