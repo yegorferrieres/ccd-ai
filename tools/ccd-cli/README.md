@@ -14,14 +14,55 @@ A Python-based command-line interface for CCD for AI (Continuous Context Documen
 
 ## Installation
 
-> **🚧 Development Status**: CCD for AI CLI is currently in active development and not yet available on PyPI. Please install from source.
+### From PyPI (Recommended)
 
-### From Source (Recommended)
+```bash
+pip install ccd-cli
+```
+
+**✅ Package successfully published to PyPI!**  
+You can now install `ccd-cli` directly from PyPI using the command above.
+
+### From Source
 
 ```bash
 git clone https://github.com/yegorferrieres/ccd-ai.git
 cd ccd-ai/tools/ccd-cli
 pip install -e .
+```
+
+## Publishing to PyPI
+
+### Building the Package
+
+```bash
+# Install build tools
+pip install build twine
+
+# Build the package
+python -m build
+
+# This creates dist/ directory with wheel and source distribution
+```
+
+### Publishing to TestPyPI
+
+```bash
+# Upload to TestPyPI first
+twine upload --repository testpypi dist/*
+
+# Test installation from TestPyPI
+pip install --index-url https://test.pypi.org/simple/ ccd-cli
+```
+
+### Publishing to PyPI
+
+```bash
+# Upload to PyPI
+twine upload dist/*
+
+# Verify installation
+pip install ccd-cli
 ```
 
 ### Development Installation

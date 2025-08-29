@@ -4,15 +4,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ccd-cli"
-version = "1.0.0"
-description = "CCD for AI (Continuous Context Documentation for AI) CLI tool with AI-CONTEXT integration"
+version = "0.1.0"
+description = "CLI tools for Continuous Context Documentation (CCD)"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "CCD Team", email = "yegor@martlive.ai"}
+    {name = "Yegor Ferrieres aka Egor Borodavko", email = "yegor@martlive.ai"}
 ]
 maintainers = [
-    {name = "CCD Team", email = "yegor@martlive.ai"}
+    {name = "Yegor Ferrieres aka Egor Borodavko", email = "yegor@martlive.ai"}
 ]
 keywords = ["ccd", "documentation", "context", "rag", "software-development", "ai-context", "code-integration"]
 classifiers = [
@@ -58,13 +58,16 @@ dev = [
 ]
 
 [project.scripts]
-ccd = "ccd_cli.cli:main"
+ccd = "ccd_cli.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/yegorferrieres/ccd-ai"
 Documentation = "https://github.com/yegorferrieres/ccd-ai/tree/main/docs"
 Repository = "https://github.com/yegorferrieres/ccd-ai"
 "Bug Tracker" = "https://github.com/yegorferrieres/ccd-ai/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.black]
 line-length = 88
@@ -109,7 +112,7 @@ markers = [
 ]
 
 [tool.coverage.run]
-source = ["ccd_cli"]
+source = ["src/ccd_cli"]
 omit = [
     "*/tests/*",
     "*/test_*",

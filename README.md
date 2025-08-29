@@ -2,24 +2,36 @@
 
 > **CCD for AI (Continuous Context Documentation for AI) keeps AI and humans aligned with a continuously updated project context. It operationalizes RAG for software development by adding a rigorous update loop.**
 
-> **🚧 Development Status**: This project is actively under development. The CLI tool and methodology are functional but may have breaking changes. For production use, please check the latest releases and documentation.
+> **🚀 Production Ready**: The CLI tool is now available on PyPI! The methodology is fully functional and ready for production use.
 
 ** A comprehensive methodology for implementing RAG (Retrieval-Augmented Generation) in software development through continuous context documentation and AI-CONTEXT integration.**
 
 ** Transform your AI development workflow with structured context management and automated documentation.**
+
+**🎉 NEW: `ccd-cli` is now available on PyPI! Install with `pip install ccd-cli` and start using CCD methodology immediately.**
 
 [![Documentation](https://img.shields.io/badge/docs-mkdocs-blue)](https://github.com/yegorferrieres/ccd-ai)
 [![CI Status](https://img.shields.io/badge/CI-validating%20context-green)](https://github.com/yegorferrieres/ccd-ai/actions)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](https://github.com/yegorferrieres/ccd-ai)
+[![PyPI](https://img.shields.io/badge/PyPI-ccd--cli-blue)](https://pypi.org/project/ccd-cli/)
+
+## 🚀 Quick Install
+
+```bash
+pip install ccd-cli
+```
+
+**✅ Package successfully published to PyPI!**  
+You can now install `ccd-cli` directly from PyPI and start using CCD methodology immediately.
 
 ## Key Features
 
 - ** AI-CONTEXT Integration**: Direct context access in source code
 - ** Methodology Loop**: Automated project planning and decision tracking
 - ** Quality Gates**: Comprehensive validation and health monitoring
-- ** CLI Tools**: Command-line interface for automation
+- ** CLI Tools**: Command-line interface for automation (Available on PyPI)
 - ** Four-Tier Architecture**: Repository → Module → File → Code level context
 - ** RAG Optimization**: Enhanced AI tool performance with structured context
 
@@ -27,11 +39,12 @@
 
 ### 1. Install CCD for AI CLI
 ```bash
-# Clone the repository
+# Install from PyPI (Recommended)
+pip install ccd-cli
+
+# Or install from source
 git clone https://github.com/yegorferrieres/ccd-ai.git
 cd ccd-ai/tools/ccd-cli
-
-# Install locally
 pip install -e .
 ```
 
@@ -56,7 +69,7 @@ git push
 
 **That's it!** Your AI tools now have fresh, structured context about your codebase.
 
-> **Note**: CCD for AI CLI is currently in development. For production use, consider building from source or waiting for the PyPI release.
+> **✅ Package Available**: `ccd-cli` is now available on PyPI! Install with `pip install ccd-cli` for production use.
 
 ## The CCD for AI Loop
 
@@ -157,7 +170,7 @@ AI-CONTEXT comments provide direct access to context documentation from within s
 
 ## Tools & Automation
 
-- **ccd-cli**: Command-line interface for context management with AI-CONTEXT integration
+- **ccd-cli**: Command-line interface for context management with AI-CONTEXT integration (Available on PyPI: `pip install ccd-cli`)
 - **Automated Generation**: Context cards on file changes
 - **AI-CONTEXT Integration**: Direct context links in source code with validation
 - **Methodology Loop**: Automated management of roadmap, engineering log, and ADRs
@@ -177,6 +190,7 @@ AI-CONTEXT comments provide direct access to context documentation from within s
 - [AI-CONTEXT Examples](https://github.com/yegorferrieres/ccd-ai/tree/main/docs/examples/ai-context-integration)
 - [CCD CLI Documentation](https://github.com/yegorferrieres/ccd-ai/tree/main/tools/ccd-cli/README.md)
 - [CCD CLI Examples](https://github.com/yegorferrieres/ccd-ai/tree/main/tools/ccd-cli/examples)
+- [PyPI Package](https://pypi.org/project/ccd-cli/)
 - [Playbooks](https://github.com/yegorferrieres/ccd-ai/tree/main/docs/playbooks)
 - [Checklists](https://github.com/yegorferrieres/ccd-ai/tree/main/docs/checklists)
 - [API Reference](https://github.com/yegorferrieres/ccd-ai/tree/main/docs)
@@ -188,6 +202,7 @@ AI-CONTEXT comments provide direct access to context documentation from within s
 - **Developer-Friendly**: Minimal overhead, maximum value
 - **Enterprise-Ready**: Scales from startups to large organizations
 - **Open Source**: Community-driven and transparent
+- **Production Ready**: CLI tool available on PyPI for immediate use
 
 ## Benefits of the Methodology Loop
 
@@ -233,7 +248,10 @@ echo "## $(date +%Y-%m-%d) - [Task Description]" >> docs/ENGINEERING_LOG.md
 
 ### Installation
 ```bash
-# First, install CCD CLI locally
+# Install from PyPI (Recommended)
+pip install ccd-cli
+
+# Or install from source
 git clone https://github.com/yegorferrieres/ccd-ai.git
 cd ccd-ai/tools/ccd-cli
 pip install -e .
@@ -368,7 +386,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Quick Links
 
 - ** [Documentation](docs/)**: Complete methodology guide
-- ** [CCD for AI CLI](tools/ccd-cli/)**: Command-line interface (install locally)
+- ** [CCD for AI CLI](tools/ccd-cli/)**: Command-line interface (Available on PyPI: `pip install ccd-cli`)
+- ** [PyPI Package](https://pypi.org/project/ccd-cli/)**: Install directly from PyPI
 - ** [Examples](docs/examples/)**: Real-world implementations
 - ** [Research](research/)**: Academic papers and research
 - ** [Website](site/)**: MkDocs documentation site
@@ -382,5 +401,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Last Updated**: 2025-08-28  
+**Last Updated**: 2025-08-29  
 **Made with dedication by the CCD for AI (Continuous Context Documentation for AI) community**

@@ -1,2 +1,0 @@
-[console_scripts]
-ccd = ccd_cli.cli:main
