@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CCD Default Schema",
+  "description": "Default JSON schema for CCD validation when specific schema is not specified",
+  "type": "object",
+  "required": ["ccd_version", "type", "content"],
+  "properties": {
+    "ccd_version": {
+      "type": "string",
+      "description": "CCD schema version",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "examples": ["1.0.0", "1.1.0"]
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of CCD document",
+      "enum": [
+        "codemap",
+        "index",
+        "context-card",
+        "engineering-log",
+        "adr",
+        "roadmap",
+        "playbook",
+        "checklist",
+        "template",
+        "other"
+      ]
+    },
+    "content": {
+      "type": "object",
+      "description": "Document content",
+      "additionalProperties": true
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Document metadata",
+      "properties": {
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the document was created"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the document was last updated"
+        },
+        "author": {
+          "type": "string",
+          "description": "Document author"
+        },
+        "version": {
+          "type": "string",
+          "description": "Document version"
+        },
+        "status": {
+          "type": "string",
+          "description": "Document status",
+          "enum": [
+            "draft",
+            "review",
+            "approved",
+            "deprecated",
+            "archived"
+          ]
+        },
+        "tags": {
+          "type": "array",
+          "description": "Document tags",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 30
+          },
+          "maxItems": 10
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "description": "Validation information",
+      "properties": {
+        "schema_valid": {
+          "type": "boolean",
+          "description": "Whether the document passes schema validation"
+        },
+        "content_valid": {
+          "type": "boolean",
+          "description": "Whether the document passes content validation"
+        },
+        "last_validated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the document was last validated"
+        },
+        "validation_errors": {
+          "type": "array",
+          "description": "Validation errors found",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Path to the error location"
+              },
+              "message": {
+                "type": "string",
+                "description": "Error message"
+              },
+              "severity": {
+                "type": "string",
+                "enum": ["error", "warning", "info"]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

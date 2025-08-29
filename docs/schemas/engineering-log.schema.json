@@ -1,0 +1,544 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CCD Engineering Log Schema",
+  "description": "JSON schema for validating CCD engineering log entries",
+  "type": "object",
+  "required": ["overview", "entries"],
+  "properties": {
+    "overview": {
+      "type": "object",
+      "required": ["title", "description", "last_updated"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title of the engineering log",
+          "minLength": 10,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the engineering log purpose",
+          "minLength": 20,
+          "maxLength": 500
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the log was last updated"
+        },
+        "maintainer": {
+          "type": "string",
+          "description": "Person responsible for maintaining the log"
+        },
+        "contact": {
+          "type": "string",
+          "format": "email",
+          "description": "Contact email for log maintainer"
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "description": "List of engineering log entries",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["timestamp", "title", "type", "description", "author"],
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the entry was created"
+          },
+          "title": {
+            "type": "string",
+            "description": "Brief title of the entry",
+            "minLength": 10,
+            "maxLength": 200
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of engineering activity",
+            "enum": [
+              "decision",
+              "incident",
+              "debugging",
+              "optimization",
+              "refactoring",
+              "integration",
+              "deployment",
+              "testing",
+              "documentation",
+              "architecture",
+              "security",
+              "performance",
+              "maintenance",
+              "other"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the activity",
+            "minLength": 30,
+            "maxLength": 2000
+          },
+          "author": {
+            "type": "string",
+            "description": "Author of the entry"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Priority level of the entry",
+            "enum": ["low", "medium", "high", "critical"]
+          },
+          "status": {
+            "type": "string",
+            "description": "Current status of the activity",
+            "enum": [
+              "open",
+              "in-progress",
+              "resolved",
+              "closed",
+              "deferred",
+              "cancelled"
+            ]
+          },
+          "impact": {
+            "type": "object",
+            "description": "Impact assessment of the activity",
+            "properties": {
+              "scope": {
+                "type": "string",
+                "description": "Scope of impact",
+                "enum": [
+                  "file",
+                  "module",
+                  "service",
+                  "system",
+                  "team",
+                  "organization"
+                ]
+              },
+              "severity": {
+                "type": "string",
+                "description": "Severity of impact",
+                "enum": ["low", "medium", "high", "critical"]
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the impact"
+              },
+              "affected_components": {
+                "type": "array",
+                "description": "Components affected by this activity",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "technical_details": {
+            "type": "object",
+            "description": "Technical implementation details",
+            "properties": {
+              "problem": {
+                "type": "string",
+                "description": "Technical problem description"
+              },
+              "solution": {
+                "type": "string",
+                "description": "Technical solution implemented"
+              },
+              "approach": {
+                "type": "string",
+                "description": "Approach taken to solve the problem"
+              },
+              "alternatives": {
+                "type": "array",
+                "description": "Alternative solutions considered",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "code_changes": {
+                "type": "array",
+                "description": "Code changes made",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string",
+                      "description": "File path"
+                    },
+                    "changes": {
+                      "type": "string",
+                      "description": "Description of changes"
+                    },
+                    "commit": {
+                      "type": "string",
+                      "description": "Git commit hash"
+                    }
+                  }
+                }
+              },
+              "dependencies": {
+                "type": "array",
+                "description": "Dependencies added or modified",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "configuration": {
+                "type": "object",
+                "description": "Configuration changes made",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "resolution": {
+            "type": "object",
+            "description": "How the activity was resolved",
+            "properties": {
+              "outcome": {
+                "type": "string",
+                "description": "Final outcome of the activity"
+              },
+              "verification": {
+                "type": "string",
+                "description": "How the resolution was verified"
+              },
+              "testing": {
+                "type": "string",
+                "description": "Testing performed to validate resolution"
+              },
+              "documentation": {
+                "type": "string",
+                "description": "Documentation updated as part of resolution"
+              }
+            }
+          },
+          "next_steps": {
+            "type": "array",
+            "description": "Next steps to be taken",
+            "items": {
+              "type": "object",
+              "required": ["action", "assignee"],
+              "properties": {
+                "action": {
+                  "type": "string",
+                  "description": "Action to be taken"
+                },
+                "assignee": {
+                  "type": "string",
+                  "description": "Person responsible for the action"
+                },
+                "due_date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Due date for the action"
+                },
+                "priority": {
+                  "type": "string",
+                  "enum": ["low", "medium", "high", "critical"]
+                }
+              }
+            }
+          },
+          "related_issues": {
+            "type": "array",
+            "description": "Related issues, PRs, or discussions",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["issue", "pr", "discussion", "documentation", "other"]
+                },
+                "reference": {
+                  "type": "string",
+                  "description": "Reference to the related item"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Brief description of the relationship"
+                }
+              }
+            }
+          },
+          "metrics": {
+            "type": "object",
+            "description": "Metrics related to this activity",
+            "properties": {
+              "time_spent": {
+                "type": "string",
+                "description": "Time spent on this activity",
+                "pattern": "^\\d+(\\.\\d+)?\\s*(h|hours|d|days|w|weeks)$"
+              },
+              "cost": {
+                "type": "string",
+                "description": "Cost impact if applicable"
+              },
+              "performance_impact": {
+                "type": "object",
+                "properties": {
+                  "before": {
+                    "type": "string",
+                    "description": "Performance metrics before changes"
+                  },
+                  "after": {
+                    "type": "string",
+                    "description": "Performance metrics after changes"
+                  },
+                  "improvement": {
+                    "type": "string",
+                    "description": "Improvement achieved"
+                  }
+                }
+              }
+            }
+          },
+          "lessons_learned": {
+            "type": "array",
+            "description": "Lessons learned from this activity",
+            "items": {
+              "type": "string",
+              "description": "A lesson learned",
+              "minLength": 10,
+              "maxLength": 300
+            }
+          },
+          "tags": {
+            "type": "array",
+            "description": "Tags for categorizing the entry",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 30
+            },
+            "maxItems": 10
+          },
+          "attachments": {
+            "type": "array",
+            "description": "Related files or attachments",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Attachment name"
+                },
+                "path": {
+                  "type": "string",
+                  "description": "Path to the attachment"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "Type of attachment"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of the attachment"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "current_status": {
+      "type": "object",
+      "description": "Current project status summary",
+      "properties": {
+        "project_phase": {
+          "type": "string",
+          "description": "Current project development phase"
+        },
+        "milestones": {
+          "type": "array",
+          "description": "Current milestone status",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["not-started", "in-progress", "completed", "delayed"]
+              },
+              "due_date": {
+                "type": "string",
+                "format": "date"
+              },
+              "completion": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            }
+          }
+        },
+        "completed_components": {
+          "type": "array",
+          "description": "Components that have been completed",
+          "items": {
+            "type": "string"
+          }
+        },
+        "in_progress_tasks": {
+          "type": "array",
+          "description": "Tasks currently in progress",
+          "items": {
+            "type": "string"
+          }
+        },
+        "next_steps": {
+          "type": "array",
+          "description": "Next steps to be taken",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "success_metrics": {
+      "type": "object",
+      "description": "Success metrics and KPIs",
+      "properties": {
+        "context_freshness": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "current": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "unit": {
+              "type": "string",
+              "default": "percentage"
+            }
+          }
+        },
+        "retrieval_precision": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "current": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "unit": {
+              "type": "string",
+              "default": "percentage"
+            }
+          }
+        },
+        "context_coverage": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "current": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "unit": {
+              "type": "string",
+              "default": "percentage"
+            }
+          }
+        },
+        "drift_mttr": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "string",
+              "description": "Target mean time to resolution"
+            },
+            "current": {
+              "type": "string",
+              "description": "Current mean time to resolution"
+            },
+            "unit": {
+              "type": "string",
+              "default": "hours"
+            }
+          }
+        },
+        "time_to_context": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "string",
+              "description": "Target time to context"
+            },
+            "current": {
+              "type": "string",
+              "description": "Current time to context"
+            },
+            "unit": {
+              "type": "string",
+              "default": "minutes"
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata about the engineering log",
+      "properties": {
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the log was created"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the log format",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "template_version": {
+          "type": "string",
+          "description": "Version of the template used",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "generator": {
+          "type": "object",
+          "properties": {
+            "tool": {
+              "type": "string",
+              "description": "Tool used to generate the log"
+            },
+            "version": {
+              "type": "string",
+              "description": "Version of the generation tool"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "description": "When the log was generated"
+            }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

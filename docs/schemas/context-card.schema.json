@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CCD Context Card Schema",
+  "description": "Schema for validating context card (.ctx.md) files in CCD methodology",
+  "type": "object",
+  "required": ["title", "owner", "updated_at", "systems_impacted"],
+  "properties": {
+    "title": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Context card title"
+    },
+    "owner": {
+      "type": "string",
+      "description": "Person responsible for this context card"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date",
+      "description": "Last update date (YYYY-MM-DD)"
+    },
+    "systems_impacted": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1,
+      "description": "Systems or modules impacted by this file"
+    },
+    "file_path": {
+      "type": "string",
+      "description": "Path to the source file this context card documents"
+    },
+    "file_type": {
+      "type": "string",
+      "enum": ["go", "py", "js", "ts", "yaml", "md", "other"],
+      "description": "Type of the source file"
+    },
+    "file_size": {
+      "type": "string",
+      "pattern": "^\\d+(\\.\\d+)?\\s*(B|KB|MB|GB)$",
+      "description": "File size in human-readable format"
+    },
+    "lines_of_code": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of lines of code"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "List of dependencies"
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Tags for categorization"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "default": "medium",
+      "description": "Priority level"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "review", "approved", "deprecated"],
+      "default": "draft",
+      "description": "Context card status"
+    },
+    "review_cycle": {
+      "type": "string",
+      "enum": ["weekly", "monthly", "quarterly", "on-change"],
+      "default": "monthly",
+      "description": "How often this should be reviewed"
+    },
+    "next_review": {
+      "type": "string",
+      "format": "date",
+      "description": "Next review date (YYYY-MM-DD)"
+    }
+  },
+  "additionalProperties": false
+}

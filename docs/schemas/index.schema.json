@@ -1,0 +1,211 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CCD INDEX Schema",
+  "description": "Schema for validating INDEX.yaml files in CCD methodology",
+  "type": "object",
+  "required": ["module", "files", "contracts", "metadata"],
+  "properties": {
+    "module": {
+      "type": "object",
+      "required": ["name", "path", "type"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Module name"
+        },
+        "path": {
+          "type": "string",
+          "description": "Module file path"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["service", "library", "cli", "config", "docs", "tests", "scripts"],
+          "description": "Module type"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 300,
+          "description": "Module description"
+        },
+        "language": {
+          "type": "string",
+          "enum": ["go", "python", "javascript", "typescript", "yaml", "markdown", "other"],
+          "description": "Primary programming language"
+        }
+      }
+    },
+    "files": {
+      "type": "object",
+      "description": "File definitions within the module",
+      "patternProperties": {
+        "^[a-zA-Z0-9_.-]+$": {
+          "type": "object",
+          "required": ["path", "type", "description"],
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "File path relative to module"
+            },
+            "type": {
+              "type": "string",
+              "enum": ["source", "config", "test", "docs", "data", "other"],
+              "description": "File type"
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 200,
+              "description": "File description"
+            },
+            "context_file": {
+              "type": "string",
+              "description": "Path to context card (.ctx.md)"
+            },
+            "size": {
+              "type": "string",
+              "pattern": "^\\d+(\\.\\d+)?\\s*(B|KB|MB|GB)$",
+              "description": "File size"
+            },
+            "lines": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of lines"
+            },
+            "dependencies": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "File dependencies"
+            },
+            "tags": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "File tags"
+            }
+          }
+        }
+      }
+    },
+    "contracts": {
+      "type": "object",
+      "description": "Module I/O contracts",
+      "properties": {
+        "inputs": {
+          "type": "object",
+          "description": "Input contracts",
+          "patternProperties": {
+            "^[a-zA-Z0-9_-]+$": {
+              "type": "object",
+              "required": ["type", "description"],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "Data type"
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 200,
+                  "description": "Input description"
+                },
+                "required": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "validation": {
+                  "type": "object",
+                  "description": "Validation rules"
+                },
+                "example": {
+                  "description": "Example value"
+                }
+              }
+            }
+          }
+        },
+        "outputs": {
+          "type": "object",
+          "description": "Output contracts",
+          "patternProperties": {
+            "^[a-zA-Z0-9_-]+$": {
+              "type": "object",
+              "required": ["type", "description"],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "Data type"
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 200,
+                  "description": "Output description"
+                },
+                "example": {
+                  "description": "Example value"
+                }
+              }
+            }
+          }
+        },
+        "apis": {
+          "type": "object",
+          "description": "API contracts",
+          "patternProperties": {
+            "^[a-zA-Z0-9_-]+$": {
+              "type": "object",
+              "required": ["method", "path", "description"],
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "enum": ["GET", "POST", "PUT", "DELETE", "PATCH"],
+                  "description": "HTTP method"
+                },
+                "path": {
+                  "type": "string",
+                  "description": "API endpoint path"
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 200,
+                  "description": "API description"
+                },
+                "parameters": {
+                  "type": "object",
+                  "description": "Request parameters"
+                },
+                "responses": {
+                  "type": "object",
+                  "description": "Response schemas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["generated_at", "ccd_version"],
+      "properties": {
+        "generated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this index was generated"
+        },
+        "ccd_version": {
+          "type": "string",
+          "description": "CCD CLI version used"
+        },
+        "total_files": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of files"
+        },
+        "context_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of files with context files"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

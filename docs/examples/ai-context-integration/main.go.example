@@ -1,0 +1,141 @@
+// AI-CONTEXT: @file:contexts/files/services/edge-gateway/cmd/edge/main.go.ctx.md
+// AI-CONTEXT: @freshness:2025-08-28T10:00:00Z
+// AI-CONTEXT: @health:95%
+// AI-CONTEXT: @dependencies:router.go,middleware.go,config.go
+// AI-CONTEXT: @tags:entry-point,server,initialization
+// AI-CONTEXT: @owner:backend-team
+// AI-CONTEXT: @review:2025-09-27
+// AI-CONTEXT: @status:active
+
+package main
+
+import (
+    "github.com/gin-gonic/gin"
+    "github.com/sirupsen/logrus"
+    "os"
+    "os/signal"
+    "syscall"
+    "time"
+)
+
+// Main application entry point for the Edge Gateway service
+// This service acts as the primary entry point for all external API requests,
+// providing authentication, rate limiting, and request routing.
+func main() {
+    // Initialize logger
+    log := logrus.New()
+    log.SetLevel(logrus.InfoLevel)
+    
+    // Load configuration
+    config := loadConfig()
+    
+    // Initialize router with middleware
+    router := gin.New()
+    router.Use(gin.Recovery())
+    router.Use(corsMiddleware())
+    router.Use(loggingMiddleware(log))
+    
+    // Setup routes
+    setupRoutes(router)
+    
+    // Start server
+    go func() {
+        if err := router.Run(config.Address); err != nil {
+            log.Fatal("Failed to start server:", err)
+        }
+    }()
+    
+    // Wait for interrupt signal
+    quit := make(chan os.Signal, 1)
+    signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+    <-quit
+    
+    log.Info("Shutting down server...")
+}
+
+// loadConfig loads configuration from environment variables and config files
+func loadConfig() *Config {
+    // Implementation details available in context card
+    return &Config{
+        Address: getEnv("SERVER_ADDRESS", ":8080"),
+        LogLevel: getEnv("LOG_LEVEL", "info"),
+    }
+}
+
+// setupRoutes configures all API routes and middleware
+func setupRoutes(router *gin.Engine) {
+    // API v1 routes
+    v1 := router.Group("/api/v1")
+    {
+        v1.GET("/health", healthCheck)
+        v1.POST("/auth", authenticate)
+        v1.GET("/users", getUsers)
+    }
+}
+
+// healthCheck provides health status endpoint
+func healthCheck(c *gin.Context) {
+    c.JSON(200, gin.H{
+        "status": "healthy",
+        "timestamp": time.Now().ISO8601(),
+    })
+}
+
+// authenticate handles user authentication
+func authenticate(c *gin.Context) {
+    // Authentication logic available in context card
+    c.JSON(200, gin.H{
+        "message": "Authentication endpoint",
+    })
+}
+
+// getUsers retrieves user information
+func getUsers(c *gin.Context) {
+    // User retrieval logic available in context card
+    c.JSON(200, gin.H{
+        "message": "Users endpoint",
+    })
+}
+
+// Helper functions
+func getEnv(key, defaultValue string) string {
+    if value := os.Getenv(key); value != "" {
+        return value
+    }
+    return defaultValue
+}
+
+func corsMiddleware() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        c.Header("Access-Control-Allow-Origin", "*")
+        c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+        c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization")
+        
+        if c.Request.Method == "OPTIONS" {
+            c.AbortWithStatus(204)
+            return
+        }
+        
+        c.Next()
+    }
+}
+
+func loggingMiddleware(log *logrus.Logger) gin.HandlerFunc {
+    return gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
+        log.WithFields(logrus.Fields{
+            "method": param.Method,
+            "path": param.Path,
+            "status": param.StatusCode,
+            "latency": param.Latency,
+            "client_ip": param.ClientIP,
+        }).Info("HTTP Request")
+        
+        return ""
+    })
+}
+
+// Config holds application configuration
+type Config struct {
+    Address  string
+    LogLevel string
+}

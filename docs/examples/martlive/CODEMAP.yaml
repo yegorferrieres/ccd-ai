@@ -1,0 +1,278 @@
+version: "1.0.0"
+project:
+  name: "MartLive AI Video Assistant"
+  description: "AI-powered video processing platform with real-time transcription and intelligent assistance"
+  domain: "ai-video-processing"
+  technology_stack:
+    - "go"
+    - "python"
+    - "javascript"
+    - "kubernetes"
+    - "websocket"
+    - "ai-models"
+    - "docker"
+    - "helm"
+    - "redis"
+    - "postgresql"
+  repository_url: "https://github.com/martlive/ai-video-assistant"
+  website_url: "https://martlive.ai"
+  license: "MIT"
+  maintainers:
+    - name: "MartLive Team"
+      email: "team@martlive.ai"
+      role: "Lead"
+
+modules:
+  - name: "edge-gateway"
+    path: "services/edge-gateway"
+    type: "service"
+    description: "API gateway and request routing service built in Go"
+    language: "go"
+    size: "45.2 KB"
+    lines: 1250
+    files: 18
+    complexity: "high"
+    status: "stable"
+    priority: "critical"
+    tags:
+      - "api-gateway"
+      - "routing"
+      - "authentication"
+      - "load-balancing"
+
+  - name: "asr-service"
+    path: "services/asr-service"
+    type: "service"
+    description: "Automatic Speech Recognition service using Python and AI models"
+    language: "python"
+    size: "78.5 KB"
+    lines: 2100
+    files: 25
+    complexity: "high"
+    status: "stable"
+    priority: "critical"
+    tags:
+      - "speech-recognition"
+      - "ai-models"
+      - "audio-processing"
+      - "real-time"
+
+  - name: "coach-llm"
+    path: "services/coach-llm"
+    type: "service"
+    description: "AI coaching service using Large Language Models for intelligent assistance"
+    language: "python"
+    size: "92.1 KB"
+    lines: 2800
+    files: 32
+    complexity: "critical"
+    status: "development"
+    priority: "high"
+    tags:
+      - "llm"
+      - "ai-coaching"
+      - "natural-language"
+      - "context-processing"
+
+  - name: "web-demo"
+    path: "services/web-demo"
+    type: "service"
+    description: "Web-based user interface with real-time WebSocket communication"
+    language: "javascript"
+    size: "35.8 KB"
+    lines: 950
+    files: 15
+    complexity: "medium"
+    status: "stable"
+    priority: "high"
+    tags:
+      - "frontend"
+      - "websocket"
+      - "real-time"
+      - "user-interface"
+
+  - name: "kubernetes-config"
+    path: "k8s"
+    type: "deployment"
+    description: "Kubernetes deployment configurations and Helm charts"
+    language: "yaml"
+    size: "28.3 KB"
+    lines: 720
+    files: 12
+    complexity: "medium"
+    status: "stable"
+    priority: "high"
+    tags:
+      - "kubernetes"
+      - "deployment"
+      - "helm"
+      - "infrastructure"
+
+  - name: "documentation"
+    path: "docs"
+    type: "documentation"
+    description: "Project documentation and CCD implementation examples"
+    language: "markdown"
+    size: "15.6 KB"
+    lines: 420
+    files: 8
+    complexity: "low"
+    status: "stable"
+    priority: "medium"
+    tags:
+      - "documentation"
+      - "ccd"
+      - "guides"
+      - "examples"
+
+  - name: "testing"
+    path: "tests"
+    type: "test"
+    description: "Test suites and testing infrastructure for all services"
+    language: "python"
+    size: "42.7 KB"
+    lines: 1100
+    files: 20
+    complexity: "medium"
+    status: "stable"
+    priority: "medium"
+    tags:
+      - "testing"
+      - "test-suites"
+      - "integration-tests"
+      - "performance-tests"
+
+  - name: "tools"
+    path: "tools"
+    type: "tool"
+    description: "Development and deployment tools and scripts"
+    language: "bash"
+    size: "18.9 KB"
+    lines: 480
+    files: 10
+    complexity: "low"
+    status: "stable"
+    priority: "low"
+    tags:
+      - "tools"
+      - "scripts"
+      - "automation"
+      - "deployment"
+
+dependencies:
+  - from: "edge-gateway"
+    to: "asr-service"
+    type: "api"
+    description: "Edge gateway routes speech recognition requests to ASR service"
+    strength: "strong"
+    direction: "unidirectional"
+
+  - from: "edge-gateway"
+    to: "coach-llm"
+    type: "api"
+    description: "Edge gateway routes coaching requests to LLM service"
+    strength: "strong"
+    direction: "unidirectional"
+
+  - from: "edge-gateway"
+    to: "web-demo"
+    type: "api"
+    description: "Edge gateway provides API endpoints for web demo interface"
+    strength: "strong"
+    direction: "unidirectional"
+
+  - from: "web-demo"
+    to: "edge-gateway"
+    type: "api"
+    description: "Web demo makes HTTP requests to edge gateway API"
+    strength: "strong"
+    direction: "unidirectional"
+
+  - from: "asr-service"
+    to: "coach-llm"
+    type: "data"
+    description: "ASR service provides transcribed text to LLM service for context"
+    strength: "medium"
+    direction: "unidirectional"
+
+  - from: "coach-llm"
+    to: "asr-service"
+    type: "api"
+    description: "LLM service may request additional audio processing from ASR service"
+    strength: "weak"
+    direction: "unidirectional"
+
+  - from: "edge-gateway"
+    to: "kubernetes-config"
+    type: "deployment"
+    description: "Edge gateway is deployed using Kubernetes configuration"
+    strength: "strong"
+    direction: "unidirectional"
+
+  - from: "asr-service"
+    to: "kubernetes-config"
+    type: "deployment"
+    description: "ASR service is deployed using Kubernetes configuration"
+    strength: "strong"
+    direction: "unidirectional"
+
+  - from: "coach-llm"
+    to: "kubernetes-config"
+    type: "deployment"
+    description: "LLM service is deployed using Kubernetes configuration"
+    strength: "strong"
+    direction: "unidirectional"
+
+  - from: "web-demo"
+    to: "kubernetes-config"
+    type: "deployment"
+    description: "Web demo is deployed using Kubernetes configuration"
+    strength: "strong"
+    direction: "unidirectional"
+
+  - from: "testing"
+    to: "edge-gateway"
+    type: "test"
+    description: "Testing infrastructure tests edge gateway functionality"
+    strength: "medium"
+    direction: "unidirectional"
+
+  - from: "testing"
+    to: "asr-service"
+    type: "test"
+    description: "Testing infrastructure tests ASR service functionality"
+    strength: "medium"
+    direction: "unidirectional"
+
+  - from: "testing"
+    to: "coach-llm"
+    type: "test"
+    description: "Testing infrastructure tests LLM service functionality"
+    strength: "medium"
+    direction: "unidirectional"
+
+  - from: "testing"
+    to: "web-demo"
+    type: "test"
+    description: "Testing infrastructure tests web demo functionality"
+    strength: "medium"
+    direction: "unidirectional"
+
+  - from: "tools"
+    to: "kubernetes-config"
+    type: "deployment"
+    description: "Deployment tools use Kubernetes configuration for automation"
+    strength: "medium"
+    direction: "unidirectional"
+
+metadata:
+  created: "2025-08-28T10:00:00Z"
+updated: "2025-08-28T10:00:00Z"
+  version_control:
+    branch: "main"
+    commit: "abc123def456ghi789"
+    tag: "v1.0.0"
+  generator:
+    tool: "ccd-cli"
+    version: "1.0.0"
+    timestamp: "2025-08-28T10:00:00Z"

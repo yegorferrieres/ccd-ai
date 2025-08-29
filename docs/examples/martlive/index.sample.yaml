@@ -1,0 +1,227 @@
+module:
+  name: "Edge Gateway Service"
+  path: "services/edge-gateway"
+  type: "service"
+  description: "API gateway for routing requests to appropriate services"
+  language: "go"
+
+files:
+  main.go:
+    path: "main.go"
+    type: "source"
+    description: "Main application entry point and server initialization"
+    context_file: "main.go.ctx.md"
+    size: "2.4 KB"
+    lines: 89
+    dependencies: ["router.go", "middleware.go", "config.go"]
+    tags: ["entry-point", "server", "initialization"]
+
+  router.go:
+    path: "router.go"
+    type: "source"
+    description: "HTTP route definitions and request handling"
+    context_file: "router.go.ctx.md"
+    size: "3.1 KB"
+    lines: 124
+    dependencies: ["handlers.go", "middleware.go"]
+    tags: ["routing", "http", "endpoints"]
+
+  handlers.go:
+    path: "handlers.go"
+    type: "source"
+    description: "Request handlers for different API endpoints"
+    context_file: "handlers.go.ctx.md"
+    size: "4.2 KB"
+    lines: 156
+    dependencies: ["models.go", "services.go"]
+    tags: ["handlers", "api", "business-logic"]
+
+  middleware.go:
+    path: "middleware.go"
+    type: "source"
+    description: "HTTP middleware for authentication, logging, and CORS"
+    context_file: "middleware.go.ctx.md"
+    size: "2.8 KB"
+    lines: 98
+    dependencies: ["auth.go", "logger.go"]
+    tags: ["middleware", "authentication", "logging"]
+
+  auth.go:
+    path: "auth.go"
+    type: "source"
+    description: "Authentication and authorization logic"
+    context_file: "auth.go.ctx.md"
+    size: "3.5 KB"
+    lines: 112
+    dependencies: ["models.go", "config.go"]
+    tags: ["authentication", "authorization", "security"]
+
+  models.go:
+    path: "models.go"
+    type: "source"
+    description: "Data models and structures for the gateway service"
+    context_file: "models.go.ctx.md"
+    size: "1.9 KB"
+    lines: 67
+    dependencies: []
+    tags: ["models", "data-structures", "types"]
+
+  services.go:
+    path: "services.go"
+    type: "source"
+    description: "Service layer for business logic and external service communication"
+    context_file: "services.go.ctx.md"
+    size: "5.1 KB"
+    lines: 178
+    dependencies: ["models.go", "client.go"]
+    tags: ["services", "business-logic", "integration"]
+
+  client.go:
+    path: "client.go"
+    type: "source"
+    description: "HTTP client for communicating with backend services"
+    context_file: "client.go.ctx.md"
+    size: "2.7 KB"
+    lines: 89
+    dependencies: ["models.go", "config.go"]
+    tags: ["http-client", "integration", "communication"]
+
+  config.go:
+    path: "config.go"
+    type: "source"
+    description: "Configuration management and environment variable handling"
+    context_file: "config.go.ctx.md"
+    size: "1.6 KB"
+    lines: 54
+    dependencies: []
+    tags: ["configuration", "environment", "settings"]
+
+  logger.go:
+    path: "logger.go"
+    type: "source"
+    description: "Structured logging implementation"
+    context_file: "logger.go.ctx.md"
+    size: "1.8 KB"
+    lines: 62
+    dependencies: ["config.go"]
+    tags: ["logging", "observability", "monitoring"]
+
+  go.mod:
+    path: "go.mod"
+    type: "config"
+    description: "Go module dependencies and version information"
+    context_file: "go.mod.ctx.md"
+    size: "0.5 KB"
+    lines: 12
+    dependencies: []
+    tags: ["dependencies", "go-modules", "versions"]
+
+  go.sum:
+    path: "go.sum"
+    type: "config"
+    description: "Go module checksums for dependency verification"
+    context_file: "go.sum.ctx.md"
+    size: "2.1 KB"
+    lines: 45
+    dependencies: []
+    tags: ["checksums", "verification", "security"]
+
+  Dockerfile:
+    path: "Dockerfile"
+    type: "config"
+    description: "Docker container configuration for the gateway service"
+    context_file: "Dockerfile.ctx.md"
+    size: "1.2 KB"
+    lines: 28
+    dependencies: []
+    tags: ["docker", "containerization", "deployment"]
+
+contracts:
+  inputs:
+    http_request:
+      type: "HTTPRequest"
+      description: "Incoming HTTP request with headers, body, and metadata"
+      required: true
+      validation:
+        method: ["GET", "POST", "PUT", "DELETE", "PATCH"]
+        content_type: ["application/json", "multipart/form-data"]
+      example:
+        method: "POST"
+        path: "/api/v1/process-video"
+        headers:
+          authorization: "Bearer <token>"
+          content-type: "application/json"
+
+    authentication_token:
+      type: "string"
+      description: "JWT token for user authentication"
+      required: true
+      validation:
+        format: "JWT"
+        min_length: 100
+      example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+
+  outputs:
+    http_response:
+      type: "HTTPResponse"
+      description: "HTTP response with status, headers, and body"
+      required: true
+      example:
+        status: 200
+        headers:
+          content-type: "application/json"
+        body:
+          success: true
+          data: {...}
+
+    error_response:
+      type: "ErrorResponse"
+      description: "Standardized error response format"
+      required: false
+      example:
+        status: 400
+        error: "Bad Request"
+        message: "Invalid input parameters"
+        details: {...}
+
+  apis:
+    process_video:
+      method: "POST"
+      path: "/api/v1/process-video"
+      description: "Process video file and return analysis results"
+      parameters:
+        video_file: "multipart/form-data"
+        options: "application/json"
+      responses:
+        200: "Video processed successfully"
+        400: "Invalid input parameters"
+        401: "Authentication required"
+        500: "Internal server error"
+
+    get_status:
+      method: "GET"
+      path: "/api/v1/status/{job_id}"
+      description: "Get processing status for a video job"
+      parameters:
+        job_id: "path parameter"
+      responses:
+        200: "Status retrieved successfully"
+        404: "Job not found"
+        401: "Authentication required"
+
+    websocket_upgrade:
+      method: "GET"
+      path: "/ws/video-stream"
+      description: "Upgrade connection to WebSocket for real-time video streaming"
+      parameters:
+        token: "query parameter"
+      responses:
+        101: "Switching to WebSocket protocol"
+        401: "Authentication required"
+        400: "Invalid upgrade request"
+
+metadata:
+  generated_at: "2025-08-28T10:00:00Z"
+  ccd_version: "1.0.0-alpha"
+  total_files: 13
+  context_coverage: 100.0

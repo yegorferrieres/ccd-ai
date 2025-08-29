@@ -1,0 +1,143 @@
+site_name: CCD for AI (Continuous Context Documentation for AI)
+site_description: Methodology for operationalizing RAG in software development
+site_author: CCD for AI Community
+site_url: https://github.com/yegorferrieres/ccd-ai
+
+repo_name: yegorferrieres/ccd-ai
+repo_url: https://github.com/yegorferrieres/ccd-ai
+edit_uri: edit/main/site/docs/
+
+theme:
+  name: material
+  language: en
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+
+plugins:
+  - search
+  - git-revision-date-localized:
+      enable_creation_date: true
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - meta
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - toc:
+      anchorlink: true
+      permalink: true
+      title: On this page
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Overview: docs/01-overview.md
+    - Quick Start: docs/quick-start.md
+    - Installation: docs/installation.md
+  - Methodology:
+    - Manifest: docs/00-manifest.md
+    - Principles: docs/02-principles.md
+    - Protocol: docs/03-protocol.md
+    - Architecture: docs/05-architecture.md
+    - Development Workflow: docs/development-workflow.md
+  - Implementation:
+    - Roles & RACI: docs/04-roles-raci.md
+    - CI/CD Integration: docs/06-ci-cd-integration.md
+    - Quality Gates: docs/07-observability-audit.md
+    - Governance: docs/08-governance.md
+  - Tools & Templates:
+    - Schemas: docs/schemas/
+    - Playbooks: docs/playbooks/
+    - Checklists: docs/checklists/
+    - Templates: docs/templates/
+  - Examples:
+    - MartLive: docs/examples/martlive/
+    - Other Examples: docs/examples/
+  - Reference:
+    - Glossary: docs/glossary.md
+    - FAQ: docs/09-faq.md
+    - Roadmap: docs/roadmap.md
+    - Development Rules: docs/DEVELOPMENT_RULES.md
+    - Engineering Log: docs/ENGINEERING_LOG.md
+  - Community:
+    - Contributing: CONTRIBUTING.md
+    - Code of Conduct: CODE_OF_CONDUCT.md
+    - Security: SECURITY.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yegorferrieres/ccd-ai
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/ccd_dev
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/ccd
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js

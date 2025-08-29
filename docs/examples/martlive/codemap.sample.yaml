@@ -1,0 +1,122 @@
+project:
+  name: "MartLive AI Video Assistant"
+  version: "1.0.0"
+  description: "AI-powered video processing platform with real-time transcription and intelligent assistance"
+  repository: "https://github.com/martlive/ai-video-assistant"
+  license: "MIT"
+  maintainers:
+    - name: "AI Team"
+      email: "ai-team@martlive.com"
+      role: "Lead Developer"
+
+modules:
+  edge-gateway:
+    path: "services/edge-gateway"
+    type: "service"
+    description: "API gateway and request routing service"
+    language: "go"
+    context_file: "services/edge-gateway/README.ctx.md"
+    tags: ["api", "gateway", "routing"]
+    status: "active"
+
+  asr-service:
+    path: "services/asr-service"
+    type: "service"
+    description: "Automatic Speech Recognition service for real-time audio processing"
+    language: "python"
+    context_file: "services/asr-service/README.ctx.md"
+    tags: ["ai", "speech", "audio", "transcription"]
+    status: "active"
+
+  coach-llm:
+    path: "services/coach-llm"
+    type: "service"
+    description: "AI-powered coaching and assistance using Large Language Models"
+    language: "python"
+    context_file: "services/coach-llm/README.ctx.md"
+    tags: ["ai", "llm", "coaching", "assistance"]
+    status: "active"
+
+  web-demo:
+    path: "services/web-demo"
+    type: "service"
+    description: "Web-based user interface for video processing and real-time communication"
+    language: "javascript"
+    context_file: "services/web-demo/README.ctx.md"
+    tags: ["ui", "websocket", "real-time", "frontend"]
+    status: "active"
+
+  ccd-tools:
+    path: "tools/ccd-cli"
+    type: "tool"
+    description: "CCD CLI tool for context generation and validation"
+    language: "python"
+    context_file: "tools/ccd-cli/README.ctx.md"
+    tags: ["tooling", "automation", "validation"]
+    status: "active"
+
+  schemas:
+    path: "schemas"
+    type: "config"
+    description: "JSON schemas for validating context files and configuration"
+    language: "json"
+    context_file: "schemas/README.ctx.md"
+    tags: ["validation", "schemas", "configuration"]
+    status: "active"
+
+  docs:
+    path: "docs"
+    type: "docs"
+    description: "Project documentation and methodology guides"
+    language: "markdown"
+    context_file: "docs/README.ctx.md"
+    tags: ["documentation", "guides", "methodology"]
+    status: "active"
+
+  tests:
+    path: "tests"
+    type: "tests"
+    description: "Test suites and test data for all services"
+    language: "python"
+    context_file: "tests/README.ctx.md"
+    tags: ["testing", "quality", "validation"]
+    status: "active"
+
+  scripts:
+    path: "scripts"
+    type: "scripts"
+    description: "Utility scripts for deployment, monitoring, and maintenance"
+    language: "bash"
+    context_file: "scripts/README.ctx.md"
+    tags: ["automation", "deployment", "utilities"]
+    status: "active"
+
+dependencies:
+  edge-gateway:
+    - "asr-service"
+    - "coach-llm"
+    - "web-demo"
+  
+  asr-service:
+    - "coach-llm"
+  
+  coach-llm:
+    - "asr-service"
+  
+  web-demo:
+    - "edge-gateway"
+  
+  ccd-tools:
+    - "schemas"
+  
+  tests:
+    - "edge-gateway"
+    - "asr-service"
+    - "coach-llm"
+    - "web-demo"
+
+metadata:
+  generated_at: "2025-08-28T10:00:00Z"
+  ccd_version: "1.0.0-alpha"
+  total_modules: 9
+  context_coverage: 100.0

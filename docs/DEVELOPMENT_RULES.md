@@ -1,0 +1,457 @@
+# CCD for AI Development Rules
+
+## Core Principles
+
+### 1. Context First
+- **ALWAYS** read context files before starting development
+- Context files are the source of truth about the project
+- Don't start development without understanding existing architecture
+
+### 2. Avoid Duplication
+- Check existing functionality before creating new features
+- Use function search in the function catalog
+- Analyze dependencies between modules
+
+### 3. Maintain Currency
+- Update context files after each change
+- Validate changes before committing
+- Synchronize metadata regularly
+
+## Algorithm for Working with Context Files
+
+### Before Starting Development:
+
+1. **Study the general project context**
+   ```bash
+   # Read the main context
+   cat docs/project-context.md
+   ```
+
+2. **Analyze module dependencies**
+   ```bash
+   # Study the dependency map
+   cat docs/codemap.yaml
+   ```
+
+3. **Study the context of affected modules**
+   ```bash
+   # Read .ctx.md files of needed modules
+   ls docs/examples/*/*.ctx.md
+   ```
+
+4. **Check architectural decisions**
+   ```bash
+   # Study ADR (Architecture Decision Records)
+   ls docs/decisions/*.md
+   ```
+
+5. **Search for existing functionality**
+   ```bash
+   # Check the function catalog
+   cat docs/function-catalog.md
+   ```
+
+### During Development:
+
+1. **Follow existing patterns** from `.ctx.md` files
+2. **Use established contracts** and schemas
+3. **Comply with architectural principles** from ADR
+4. **Document changes** in context files
+
+### After Completing Development:
+
+1. **Update affected `.ctx.md` files**
+2. **Run metadata validation**
+   ```bash
+   make validate
+   ```
+3. **Update `docs/codemap.yaml`** if dependencies changed
+4. **Run metadata synchronization**
+   ```bash
+   make coverage
+   ```
+
+## **CCD Methodology Loop Integration (MANDATORY)**
+
+The CCD for AI methodology requires continuous updates to methodological files as part of the development workflow. These files are essential for AI tools to understand the current project state and provide accurate assistance.
+
+### **Methodological Files Update Workflow (MANDATORY)**
+
+#### **Step 1: Before Starting Development**
+1. **Read roadmap.md** - Understand current project state and next milestones
+2. **Review ENGINEERING_LOG.md** - Learn from recent patterns and decisions
+3. **Check decisions/** - Understand architectural context and constraints
+4. **Follow DEVELOPMENT_RULES.md** - Ensure compliance with established workflow
+
+#### **Step 2: During Development**
+1. **Follow existing patterns** from `.ctx.md` files
+2. **Use established contracts** and schemas
+3. **Comply with architectural principles** from ADR
+4. **Document changes** in context files
+5. **Note any workflow improvements** for DEVELOPMENT_RULES.md updates
+
+#### **Step 3: After Completing Development (MANDATORY - Within 2h)**
+1. **Update ENGINEERING_LOG.md** - Add new entry with:
+   - Timestamp and description
+   - Impact and technical changes
+   - Resolution and lessons learned
+   - Follow-up actions
+
+2. **Update roadmap.md** - Mark completed items and adjust timelines:
+   - Check off completed milestones
+   - Update progress indicators
+   - Adjust timelines if needed
+   - Plan next steps
+
+3. **Update decisions/** - If architectural decisions made:
+   - Create new ADR within 24h
+   - Update existing ADRs if needed
+   - Document decision rationale and consequences
+
+4. **Update DEVELOPMENT_RULES.md** - If workflow improvements identified:
+   - Add new rules or patterns
+   - Update existing workflow steps
+   - Document lessons learned
+
+#### **Step 4: Context Update Workflow (MANDATORY)**
+
+### **Step-by-Step Process:**
+
+1. **Complete Development Task** ✅
+2. **Ask User for Confirmation** ❓
+   - "All changes completed. Confirm that context files need to be updated?"
+3. **After User Confirmation** ✅
+   - Update all affected `.ctx.md` files
+   - Update `docs/codemap.yaml` if needed
+   - Update `docs/ENGINEERING_LOG.md` with new entry
+   - Update `docs/README.md` if needed
+   - Update `docs/project-context.md` if needed
+4. **Run Validation** ✅
+   ```bash
+   make validate
+   ```
+5. **Run Full Sync** ✅
+   ```bash
+   make coverage
+   ```
+6. **Confirm Completion** ✅
+   - "All context files updated and synchronized"
+
+### **Files That Must Be Updated:**
+- **All affected `.ctx.md` files** in `docs/examples/`
+- **`docs/codemap.yaml`** - if module dependencies changed
+- **`docs/ENGINEERING_LOG.md`** - after every development task
+- **`docs/roadmap.md`** - after every milestone or iteration
+- **`docs/decisions/`** - after architectural decisions
+- **`docs/DEVELOPMENT_RULES.md`** - when workflow improvements identified
+
+## **AI-CONTEXT Comments Integration (MANDATORY)**
+
+### **AI-CONTEXT Comments Requirements**
+
+Every source code file must include AI-CONTEXT comments at the beginning that provide direct access to context documentation.
+
+#### **Required AI-CONTEXT Fields**
+```bash
+# AI-CONTEXT: @file:contexts/files/path/to/file.ctx.md
+# AI-CONTEXT: @freshness:2025-08-28T10:00:00Z
+# AI-CONTEXT: @health:95%
+```
+
+#### **Optional AI-CONTEXT Fields**
+```bash
+# AI-CONTEXT: @dependencies:dep1,dep2,dep3
+# AI-CONTEXT: @tags:tag1,tag2,tag3
+# AI-CONTEXT: @owner:team-name
+# AI-CONTEXT: @review:2025-09-27
+# AI-CONTEXT: @status:active
+```
+
+#### **Language-Specific Examples**
+
+**Go**:
+```go
+// AI-CONTEXT: @file:contexts/files/services/edge-gateway/cmd/edge/main.go.ctx.md
+// AI-CONTEXT: @freshness:2025-08-28T10:00:00Z
+// AI-CONTEXT: @health:95%
+// AI-CONTEXT: @dependencies:router.go,middleware.go,config.go
+// AI-CONTEXT: @tags:entry-point,server,initialization
+
+package main
+```
+
+**Python**:
+```python
+# AI-CONTEXT: @file:contexts/files/services/coach-llm/coach_llm.py.ctx.md
+# AI-CONTEXT: @freshness:2025-08-28T10:00:00Z
+# AI-CONTEXT: @health:92%
+# AI-CONTEXT: @dependencies:openai,langchain,fastapi
+# AI-CONTEXT: @tags:ai,coaching,llm
+
+import openai
+```
+
+**TypeScript**:
+```typescript
+// AI-CONTEXT: @file:contexts/files/services/web-demo/app.ts.ctx.md
+// AI-CONTEXT: @freshness:2025-08-28T10:00:00Z
+// AI-CONTEXT: @health:88%
+// AI-CONTEXT: @dependencies:express,websocket,typescript
+// AI-CONTEXT: @tags:web,websocket,demo
+
+import express from 'express';
+```
+
+### **AI-CONTEXT Comments Workflow**
+
+#### **Before Development**
+1. **Read AI-CONTEXT comments** to understand current context
+2. **Check context freshness** to ensure information is current
+3. **Review context health** to identify potential issues
+4. **Follow context links** to detailed documentation
+
+#### **During Development**
+1. **Reference context** directly from code
+2. **Update context** when making significant changes
+3. **Maintain context links** as files are moved or renamed
+4. **Validate context** before committing changes
+
+#### **After Development (Within 2h)**
+1. **Update context cards** with new information
+2. **Refresh AI-CONTEXT comments** with new timestamps
+3. **Validate context health** to ensure quality
+4. **Commit context updates** with code changes
+
+### **AI-CONTEXT Comments Quality Gates**
+
+#### **Format Validation**
+- [ ] All required fields are present (@file, @freshness, @health)
+- [ ] Comment format follows language conventions
+- [ ] File paths are correct and accessible
+- [ ] Timestamps are in ISO 8601 format
+
+#### **Content Validation**
+- [ ] AI-CONTEXT comments match context card content
+- [ ] Freshness timestamps are current
+- [ ] Health scores are accurate
+- [ ] Dependencies and tags are up-to-date
+
+#### **Integration Validation**
+- [ ] Context files are accessible from comment paths
+- [ ] AI tools can parse and use comments
+- [ ] Development workflow includes comment updates
+- [ ] Quality gates validate comment compliance
+
+## **AI Integration with Methodological Files (MANDATORY)**
+
+### **How AI Tools Use Methodological Files**
+
+#### **1. roadmap.md - Project State Context**
+AI tools read this file to understand:
+- Current project progress and completed milestones
+- Next steps and priorities
+- Timeline constraints and dependencies
+- Resource allocation and planning context
+
+**AI Usage Pattern**:
+```bash
+# AI reads roadmap for project context
+cat docs/roadmap.md
+# AI understands current state and can suggest next actions
+```
+
+#### **2. ENGINEERING_LOG.md - Development Patterns**
+AI tools use this file to:
+- Learn from recent technical decisions and patterns
+- Understand current development context
+- Identify recurring issues and solutions
+- Provide context-aware assistance
+
+**AI Usage Pattern**:
+```bash
+# AI reads recent engineering log entries
+tail -20 docs/ENGINEERING_LOG.md
+# AI provides assistance based on recent patterns
+```
+
+#### **3. decisions/ - Architectural Context**
+AI tools reference these files to:
+- Understand system architecture evolution
+- Make decisions consistent with established patterns
+- Avoid architectural conflicts
+- Provide architecturally sound suggestions
+
+**AI Usage Pattern**:
+```bash
+# AI reads relevant ADRs for architectural context
+ls docs/decisions/*.md
+# AI makes decisions consistent with established architecture
+```
+
+#### **4. DEVELOPMENT_RULES.md - Workflow Context**
+AI tools follow these rules to:
+- Ensure consistent development practices
+- Follow established workflow patterns
+- Maintain quality standards
+- Provide workflow-compliant assistance
+
+**AI Usage Pattern**:
+```bash
+# AI reads development rules for workflow context
+cat docs/DEVELOPMENT_RULES.md
+# AI follows established workflow patterns
+```
+
+### **AI Context Update Requirements**
+
+#### **Timing**:
+- **Methodological files**: Updated within 2h of development completion
+- **AI context**: Updated within 1h of methodological file updates
+- **Validation**: AI context validation within 30min of update
+
+#### **Quality Gates**:
+- **Methodological files**: 100% compliance with update requirements
+- **AI context**: 100% synchronization with methodological files
+- **AI integration**: 100% successful context access and usage
+- **`docs/ENGINEERING_LOG.md`** - new entry with timestamp and description
+- **`docs/README.md`** - if new features or rules added
+- **`docs/project-context.md`** - if project status changed
+- **`docs/DEVELOPMENT_RULES.md`** - if new rules or processes added
+- **`docs/roadmap.md`** - update task status, add completed items, adjust priorities, update current phase and milestone
+
+### **Roadmap Update Requirements:**
+- **Task Status**: Mark completed tasks with ✅, update progress on ongoing tasks
+- **Phase Status**: Update current phase description and completion status
+- **Milestone Updates**: Adjust next milestone based on current progress
+- **Priority Adjustments**: Reprioritize tasks based on new decisions or completed work
+- **Timeline Updates**: Adjust timelines based on actual progress
+- **Risk Assessment**: Update risks and mitigation strategies based on new findings
+
+## Searching for Existing Functionality
+
+### Search Commands:
+
+```bash
+# Search by function name
+grep -r "function_name" docs/
+
+# Search by module
+grep -r "@module:name" docs/
+
+# Search by functionality type
+grep -r "context generation" docs/
+```
+
+### What to Look For:
+
+1. **Functions with similar names**
+2. **Modules with similar functionality**
+3. **Existing contracts and APIs**
+4. **Similar implementation patterns**
+
+## File Organization Rules
+
+### Test Files
+- **ALL test files must be placed in the `tests/` directory**
+- Test files should not be kept in the root directory
+- Use descriptive names for test files (e.g., `test_cli.ts`, `test_validation.ts`)
+- Virtual environments for testing should also be in `tests/` directory
+
+### Code Organization
+- Keep source code in `tools/ccd-cli/src/` directory
+- Keep configuration in root config files
+- Keep documentation in `docs/` and root markdown files
+
+### Context File Rules
+- **NEVER create context files for Node.js libraries** installed via npm
+- **NEVER create context files for system packages** or third-party dependencies
+- **NEVER create context files for system directories** (`/lib/`, `/usr/`, `/System/`, `Library/`)
+- **ONLY create context files for project source code** that we develop ourselves
+- **Virtual environment folders** (like `test_env/`, `venv/`, etc.) should not have context files
+- **Node.js library directories** (`node_modules/`) should never be included
+- **Binary and include directories** (`bin/`, `include/`, `.local/`) should be excluded
+
+## Pre-commit Checklist
+
+- [ ] All relevant context files have been read
+- [ ] No functionality duplication has been verified
+- [ ] Affected `.ctx.md` files have been updated
+- [ ] Test files are properly placed in `tests/` directory
+- [ ] **No context files created for Node.js libraries or virtual environments**
+- [ ] **Context Update Workflow completed** (confirmation → update → validate → sync)
+- [ ] Metadata validation has passed
+- [ ] `docs/codemap.yaml` has been updated (if needed)
+- [ ] Metadata synchronization has been run
+
+## Common Mistakes
+
+### ❌ Don't Do:
+- Start development without reading context
+- Create functions with similar names
+- Ignore existing contracts
+- Forget to update context files
+- **Create context files for Node.js libraries or virtual environments**
+- **Include node_modules directories in context files**
+- **Skip Context Update Workflow** (confirmation → update → validate → sync)
+- **Update code without updating context files**
+
+### ✅ Do:
+- Always read context before development
+- Search for existing functionality
+- Follow established patterns
+- Maintain documentation currency
+- **Only create context files for project source code**
+- **Keep virtual environments out of context files**
+- **Always complete Context Update Workflow** after development
+- **Ask for user confirmation before updating context files**
+
+## Tools
+
+### Main Commands:
+- `make validate` - Context validation
+- `make coverage` - Context coverage analysis
+- `make delta` - Context delta report generation
+- `make generate-cards` - Context card generation
+
+### CCD CLI Commands:
+```bash
+# AI-CONTEXT Management
+ccd add-context-comments --file src/main.py --context docs/contexts/main.py.ctx.md
+ccd validate-context-comments --file src/main.py --report
+ccd extract-context --file src/main.py
+
+# Methodology Loop Management
+ccd update-engineering-log --description "Implemented feature" --impact "Medium"
+ccd update-roadmap --milestone "API integration" --status "completed"
+ccd create-adr --title "Database Schema" --status "Proposed"
+ccd methodology-status --project-dir .
+
+# Quality Assurance
+ccd quality-gates --project . --output quality-report.json
+ccd context-health --project . --detailed
+ccd drift-detection --project . --output drift-report.json
+ccd context-freshness --project . --threshold 24
+```
+
+### Validation:
+```bash
+# Full validation
+make validate
+
+# Coverage check
+make coverage
+
+# Generate new context cards
+make generate-cards
+```
+
+## Additional Resources
+
+- `docs/README.md` - Overview of the context file system
+- `docs/intake_rules.md` - Rules for creating context cards
+- `docs/service-contracts.md` - Service contracts
+- `docs/function-catalog.md` - Function catalog
+
+---
+
+**Remember: Context files are your best friend during development!**

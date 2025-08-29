@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CCD CODEMAP Schema",
+  "description": "Schema for validating CODEMAP.yaml files in CCD methodology",
+  "type": "object",
+  "required": ["project", "modules", "dependencies", "metadata"],
+  "properties": {
+    "project": {
+      "type": "object",
+      "required": ["name", "version", "description", "repository"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Project name"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.-]+)?(\\+[a-zA-Z0-9.-]+)?$",
+          "description": "Semantic version"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Project description"
+        },
+        "repository": {
+          "type": "string",
+          "format": "uri",
+          "description": "Git repository URL"
+        },
+        "license": {
+          "type": "string",
+          "description": "Project license"
+        },
+        "maintainers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "email"],
+            "properties": {
+              "name": {"type": "string"},
+              "email": {"type": "string", "format": "email"},
+              "role": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "modules": {
+      "type": "object",
+      "description": "Module definitions",
+      "patternProperties": {
+        "^[a-zA-Z0-9_-]+$": {
+          "type": "object",
+          "required": ["path", "type", "description"],
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "Module file path"
+            },
+            "type": {
+              "type": "string",
+              "enum": ["service", "library", "cli", "config", "docs", "tests", "scripts"],
+              "description": "Module type"
+            },
+            "description": {
+              "type": "string",
+              "maxLength": 200,
+              "description": "Module description"
+            },
+            "language": {
+              "type": "string",
+              "enum": ["go", "python", "javascript", "typescript", "yaml", "markdown", "other"],
+              "description": "Primary programming language"
+            },
+            "context_file": {
+              "type": "string",
+              "description": "Path to context card (.ctx.md)"
+            },
+            "tags": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Module tags"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["active", "deprecated", "experimental", "archived"],
+              "default": "active"
+            }
+          }
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "description": "Module dependency relationships",
+      "patternProperties": {
+        "^[a-zA-Z0-9_-]+$": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]+$"
+          },
+          "description": "List of module dependencies"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["generated_at", "ccd_version"],
+      "properties": {
+        "generated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this codemap was generated"
+        },
+        "ccd_version": {
+          "type": "string",
+          "description": "CCD CLI version used"
+        },
+        "total_modules": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of modules"
+        },
+        "context_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of modules with context files"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,407 @@
+# CODEMAP.yaml Template
+
+## Description
+
+This template creates a repository-level context documentation file (CODEMAP.yaml) that provides a high-level overview of your project, including modules, dependencies, and metadata.
+
+## Usage
+
+1. Copy this template to your project root as `CODEMAP.yaml`
+2. Fill in all required fields (marked with `# REQUIRED`)
+3. Complete optional fields as appropriate for your project
+4. Validate the file using CCD CLI: `ccd validate-contexts --contexts . --schemas docs/schemas/`
+
+## Fields
+
+### Required Fields
+- `version`: Schema version (e.g., "1.0.0")
+- `project.name`: Project name
+- `project.description`: Project description
+- `project.domain`: Project domain/category
+- `modules`: List of project modules (minimum 1)
+
+### Optional Fields
+- `project.technology_stack`: List of technologies used
+- `project.repository_url`: Repository URL
+- `project.website_url`: Project website URL
+- `project.license`: Project license
+- `project.maintainers`: List of project maintainers
+- `dependencies`: List of module dependencies
+- `metadata`: Additional metadata
+
+## Template
+
+```yaml
+version: "1.0.0"  # REQUIRED: Schema version
+project:  # REQUIRED: Project information
+  name: "Your Project Name"  # REQUIRED: Project name
+  description: "Brief description of your project"  # REQUIRED: Project description
+  domain: "web-application"  # REQUIRED: Project domain (see enum values below)
+  technology_stack:  # OPTIONAL: List of technologies used
+    - "javascript"
+    - "node.js"
+    - "express"
+    - "mongodb"
+  repository_url: "https://github.com/username/project-name"  # OPTIONAL: Repository URL
+  website_url: "https://your-project.com"  # OPTIONAL: Project website
+  license: "MIT"  # OPTIONAL: Project license
+  maintainers:  # OPTIONAL: Project maintainers
+    - name: "Your Name"  # REQUIRED if maintainers section is included
+      email: "your.email@example.com"  # REQUIRED if maintainers section is included
+      role: "Lead"  # OPTIONAL: Lead, Maintainer, or Contributor
+
+modules:  # REQUIRED: List of project modules (minimum 1)
+  - name: "api-service"  # REQUIRED: Module name
+    path: "src/api"  # REQUIRED: Path to module
+    type: "service"  # REQUIRED: Module type (see enum values below)
+    description: "REST API service for the application"  # REQUIRED: Module description
+    language: "javascript"  # REQUIRED: Primary language (see enum values below)
+    size: "15.2 KB"  # OPTIONAL: Module size
+    lines: 450  # OPTIONAL: Number of lines of code
+    files: 12  # OPTIONAL: Number of files
+    complexity: "medium"  # OPTIONAL: Complexity level (low, medium, high, critical)
+    status: "stable"  # OPTIONAL: Development status (see enum values below)
+    priority: "high"  # OPTIONAL: Priority level (low, medium, high, critical)
+    tags:  # OPTIONAL: Module tags
+      - "api"
+      - "backend"
+      - "rest"
+
+  - name: "database"  # REQUIRED: Module name
+    path: "src/database"  # REQUIRED: Path to module
+    type: "service"  # REQUIRED: Module type
+    description: "Database connection and query management"  # REQUIRED: Module description
+    language: "javascript"  # REQUIRED: Primary language
+    size: "8.7 KB"  # OPTIONAL: Module size
+    lines: 280  # OPTIONAL: Number of lines of code
+    files: 8  # OPTIONAL: Number of files
+    complexity: "medium"  # OPTIONAL: Complexity level
+    status: "stable"  # OPTIONAL: Development status
+    priority: "high"  # OPTIONAL: Priority level
+    tags:  # OPTIONAL: Module tags
+      - "database"
+      - "data-access"
+      - "mongodb"
+
+  - name: "frontend"  # REQUIRED: Module name
+    path: "src/frontend"  # REQUIRED: Path to module
+    type: "service"  # REQUIRED: Module type
+    description: "User interface components and logic"  # REQUIRED: Module description
+    language: "javascript"  # REQUIRED: Primary language
+    size: "25.1 KB"  # OPTIONAL: Module size
+    lines: 720  # OPTIONAL: Number of lines of code
+    files: 18  # OPTIONAL: Number of files
+    complexity: "high"  # OPTIONAL: Complexity level
+    status: "development"  # OPTIONAL: Development status
+    priority: "high"  # OPTIONAL: Priority level
+    tags:  # OPTIONAL: Module tags
+      - "frontend"
+      - "ui"
+      - "react"
+
+dependencies:  # OPTIONAL: Module dependencies
+  - from: "api-service"  # REQUIRED if dependencies section is included: Source module
+    to: "database"  # REQUIRED if dependencies section is included: Target module
+    type: "import"  # REQUIRED if dependencies section is included: Dependency type (see enum values below)
+    description: "API service imports database models and utilities"  # REQUIRED if dependencies section is included: Dependency description
+    strength: "strong"  # OPTIONAL: Dependency strength (weak, medium, strong, critical)
+    direction: "unidirectional"  # OPTIONAL: Dependency direction (unidirectional, bidirectional, circular)
+
+  - from: "frontend"
+    to: "api-service"
+    type: "api"
+    description: "Frontend makes HTTP requests to API service"
+    strength: "strong"
+    direction: "unidirectional"
+
+metadata:  # OPTIONAL: Additional metadata
+  created: "2025-08-28T10:00:00Z"  # OPTIONAL: Creation timestamp
+updated: "2025-08-28T10:00:00Z"  # OPTIONAL: Last update timestamp
+  version_control:  # OPTIONAL: Version control information
+    branch: "main"
+    commit: "abc123def456"
+    tag: "v1.0.0"
+  generator:  # OPTIONAL: Generation tool information
+    tool: "ccd-cli"
+    version: "1.0.0"
+    timestamp: "2025-08-28T10:00:00Z"
+```
+
+## Enum Values
+
+### Project Domain
+- `web-application`
+- `mobile-application`
+- `desktop-application`
+- `api-service`
+- `library`
+- `framework`
+- `tool`
+- `infrastructure`
+- `data-science`
+- `machine-learning`
+- `blockchain`
+- `iot`
+- `gaming`
+- `enterprise`
+- `other`
+
+### Module Type
+- `service`
+- `library`
+- `tool`
+- `script`
+- `config`
+- `test`
+- `documentation`
+- `deployment`
+- `monitoring`
+- `other`
+
+### Language
+- `go`
+- `python`
+- `javascript`
+- `typescript`
+- `java`
+- `csharp`
+- `cpp`
+- `rust`
+- `php`
+- `ruby`
+- `swift`
+- `kotlin`
+- `scala`
+- `yaml`
+- `json`
+- `xml`
+- `html`
+- `css`
+- `sql`
+- `bash`
+- `powershell`
+- `other`
+
+### Module Status
+- `planning`
+- `development`
+- `testing`
+- `stable`
+- `deprecated`
+- `archived`
+
+### Module Priority
+- `low`
+- `medium`
+- `high`
+- `critical`
+
+### Module Complexity
+- `low`
+- `medium`
+- `high`
+- `critical`
+
+### Dependency Type
+- `import`
+- `reference`
+- `contract`
+- `data`
+- `api`
+- `service`
+- `database`
+- `message`
+- `event`
+- `other`
+
+### Dependency Strength
+- `weak`
+- `medium`
+- `strong`
+- `critical`
+
+### Dependency Direction
+- `unidirectional`
+- `bidirectional`
+- `circular`
+
+### License
+- `MIT`
+- `Apache-2.0`
+- `GPL-3.0`
+- `BSD-3-Clause`
+- `ISC`
+- `Unlicense`
+- `Proprietary`
+- `Other`
+
+### Maintainer Role
+- `Lead`
+- `Maintainer`
+- `Contributor`
+
+## Example
+
+Here's a completed example for a web application:
+
+```yaml
+version: "1.0.0"
+project:
+  name: "E-Commerce Platform"
+  description: "A modern e-commerce platform built with Node.js and React"
+  domain: "web-application"
+  technology_stack:
+    - "node.js"
+    - "express"
+    - "react"
+    - "mongodb"
+    - "redis"
+  repository_url: "https://github.com/company/ecommerce-platform"
+  website_url: "https://ecommerce.example.com"
+  license: "MIT"
+  maintainers:
+    - name: "John Doe"
+      email: "john.doe@company.com"
+      role: "Lead"
+    - name: "Jane Smith"
+      email: "jane.smith@company.com"
+      role: "Maintainer"
+
+modules:
+  - name: "user-service"
+    path: "src/services/user"
+    type: "service"
+    description: "User authentication and management service"
+    language: "javascript"
+    size: "12.5 KB"
+    lines: 380
+    files: 10
+    complexity: "medium"
+    status: "stable"
+    priority: "high"
+    tags:
+      - "authentication"
+      - "user-management"
+      - "security"
+
+  - name: "product-catalog"
+    path: "src/services/product"
+    type: "service"
+    description: "Product catalog and inventory management"
+    language: "javascript"
+    size: "18.2 KB"
+    lines: 520
+    files: 15
+    complexity: "high"
+    status: "stable"
+    priority: "high"
+    tags:
+      - "catalog"
+      - "inventory"
+      - "products"
+
+  - name: "order-service"
+    path: "src/services/order"
+    type: "service"
+    description: "Order processing and management"
+    language: "javascript"
+    size: "22.1 KB"
+    lines: 650
+    files: 18
+    complexity: "high"
+    status: "development"
+    priority: "high"
+    tags:
+      - "orders"
+      - "transactions"
+      - "business-logic"
+
+dependencies:
+  - from: "user-service"
+    to: "database"
+    type: "import"
+    description: "User service imports database models"
+    strength: "strong"
+    direction: "unidirectional"
+
+  - from: "product-catalog"
+    to: "database"
+    type: "import"
+    description: "Product catalog imports database models"
+    strength: "strong"
+    direction: "unidirectional"
+
+  - from: "order-service"
+    to: "user-service"
+    type: "api"
+    description: "Order service calls user service API"
+    strength: "strong"
+    direction: "unidirectional"
+
+  - from: "order-service"
+    to: "product-catalog"
+    type: "api"
+    description: "Order service calls product catalog API"
+    strength: "strong"
+    direction: "unidirectional"
+
+metadata:
+  created: "2025-08-28T10:00:00Z"
+updated: "2025-08-28T10:00:00Z"
+  version_control:
+    branch: "main"
+    commit: "def456ghi789"
+    tag: "v1.2.0"
+  generator:
+    tool: "ccd-cli"
+    version: "1.0.0"
+    timestamp: "2025-08-28T10:00:00Z"
+```
+
+## Validation
+
+### Schema Validation
+```bash
+# Validate against CODEMAP schema
+ccd validate-contexts --contexts . --schemas docs/schemas/
+
+# Validate specific file
+ccd validate-contexts --contexts CODEMAP.yaml --schemas docs/schemas/
+```
+
+### Content Validation
+- Ensure all required fields are present
+- Verify enum values are valid
+- Check that module paths exist
+- Validate dependency relationships
+- Confirm metadata is accurate
+
+### Quality Checks
+- Module descriptions are clear and specific
+- Dependencies accurately reflect relationships
+- Tags are relevant and consistent
+- File sizes and line counts are accurate
+- Status and priority values are appropriate
+
+## Notes
+
+- **Required Fields**: All fields marked as REQUIRED must be completed
+- **Optional Fields**: Complete optional fields as appropriate for your project
+- **Enum Values**: Use only the specified enum values for categorical fields
+- **Validation**: Always validate the completed file before committing
+- **Updates**: Keep the CODEMAP updated as your project evolves
+- **Consistency**: Maintain consistency with other CCD files in your project
+
+## Related Documentation
+
+- [CCD Protocol](../03-protocol.md) - Core methodology and workflow
+- [Architecture Documentation](../05-architecture.md) - Technical architecture details
+- [CODEMAP Schema](../schemas/codemap.schema.json) - JSON schema for validation
+- [Development Rules](../DEVELOPMENT_RULES.md) - Development workflow guidelines
+
+---
+
+**Status**: Active Template
+**Version**: 1.0.0-alpha
+**Last Updated**: 2025-08-28
+**Maintainer**: CCD Community

@@ -1,0 +1,548 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CCD Architecture Decision Record Schema",
+  "description": "JSON schema for validating CCD Architecture Decision Records",
+  "type": "object",
+  "required": ["status", "context", "decision", "consequences"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "description": "Current status of the decision",
+      "enum": [
+        "proposed",
+        "accepted",
+        "deprecated",
+        "superseded",
+        "rejected",
+        "draft"
+      ]
+    },
+    "context": {
+      "type": "object",
+      "required": ["problem", "forces"],
+      "properties": {
+        "problem": {
+          "type": "string",
+          "description": "Description of the problem or situation requiring a decision",
+          "minLength": 50,
+          "maxLength": 1000
+        },
+        "forces": {
+          "type": "array",
+          "description": "Factors and constraints influencing the decision",
+          "items": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 300
+          },
+          "minItems": 1,
+          "maxItems": 20
+        },
+        "stakeholders": {
+          "type": "array",
+          "description": "Stakeholders affected by this decision",
+          "items": {
+            "type": "string"
+          }
+        },
+        "timeline": {
+          "type": "object",
+          "properties": {
+            "decision_needed_by": {
+              "type": "string",
+              "format": "date",
+              "description": "When the decision needs to be made"
+            },
+            "implementation_deadline": {
+              "type": "string",
+              "format": "date",
+              "description": "When implementation should be completed"
+            }
+          }
+        },
+        "scope": {
+          "type": "string",
+          "description": "Scope of impact for this decision",
+          "enum": [
+            "file",
+            "module",
+            "service",
+            "system",
+            "team",
+            "organization",
+            "ecosystem"
+          ]
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "required": ["outcome", "rationale"],
+      "properties": {
+        "outcome": {
+          "type": "string",
+          "description": "The decision that was made",
+          "minLength": 30,
+          "maxLength": 500
+        },
+        "rationale": {
+          "type": "string",
+          "description": "Explanation of why this decision was made",
+          "minLength": 50,
+          "maxLength": 1000
+        },
+        "alternatives": {
+          "type": "array",
+          "description": "Other options that were considered",
+          "items": {
+            "type": "object",
+            "required": ["option", "reason_rejected"],
+            "properties": {
+              "option": {
+                "type": "string",
+                "description": "Alternative option considered"
+              },
+              "reason_rejected": {
+                "type": "string",
+                "description": "Why this alternative was rejected"
+              },
+              "pros": {
+                "type": "array",
+                "description": "Advantages of this alternative",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "cons": {
+                "type": "array",
+                "description": "Disadvantages of this alternative",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "description": "Assumptions made in reaching this decision",
+          "items": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 300
+          }
+        },
+        "constraints": {
+          "type": "array",
+          "description": "Constraints that influenced this decision",
+          "items": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 300
+          }
+        }
+      }
+    },
+    "consequences": {
+      "type": "object",
+      "required": ["positive", "negative"],
+      "properties": {
+        "positive": {
+          "type": "array",
+          "description": "Positive consequences of this decision",
+          "items": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 300
+          },
+          "minItems": 1
+        },
+        "negative": {
+          "type": "array",
+          "description": "Negative consequences of this decision",
+          "items": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 300
+          },
+          "minItems": 1
+        },
+        "neutral": {
+          "type": "array",
+          "description": "Neutral consequences of this decision",
+          "items": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 300
+          }
+        },
+        "risks": {
+          "type": "array",
+          "description": "Risks associated with this decision",
+          "items": {
+            "type": "object",
+            "required": ["risk", "mitigation"],
+            "properties": {
+              "risk": {
+                "type": "string",
+                "description": "Description of the risk"
+              },
+              "mitigation": {
+                "type": "string",
+                "description": "How the risk will be mitigated"
+              },
+              "probability": {
+                "type": "string",
+                "enum": ["low", "medium", "high", "critical"]
+              },
+              "impact": {
+                "type": "string",
+                "enum": ["low", "medium", "high", "critical"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "description": "Implementation details for this decision",
+      "properties": {
+        "steps": {
+          "type": "array",
+          "description": "Steps to implement this decision",
+          "items": {
+            "type": "object",
+            "required": ["step", "description"],
+            "properties": {
+              "step": {
+                "type": "string",
+                "description": "Step number or identifier"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of what needs to be done"
+              },
+              "assignee": {
+                "type": "string",
+                "description": "Person responsible for this step"
+              },
+              "due_date": {
+                "type": "string",
+                "format": "date",
+                "description": "Due date for this step"
+              },
+              "dependencies": {
+                "type": "array",
+                "description": "Prerequisites for this step",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "timeline": {
+          "type": "object",
+          "properties": {
+            "start_date": {
+              "type": "string",
+              "format": "date",
+              "description": "When implementation should start"
+            },
+            "estimated_duration": {
+              "type": "string",
+              "description": "Estimated time to complete implementation"
+            },
+            "milestones": {
+              "type": "array",
+              "description": "Key milestones during implementation",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "resources": {
+          "type": "object",
+          "properties": {
+            "people": {
+              "type": "array",
+              "description": "People needed for implementation",
+              "items": {
+                "type": "string"
+              }
+            },
+            "tools": {
+              "type": "array",
+              "description": "Tools needed for implementation",
+              "items": {
+                "type": "string"
+              }
+            },
+            "budget": {
+              "type": "string",
+              "description": "Budget required for implementation"
+            }
+          }
+        },
+        "rollback_plan": {
+          "type": "object",
+          "description": "Plan for rolling back this decision if needed",
+          "properties": {
+            "trigger": {
+              "type": "string",
+              "description": "What would trigger a rollback"
+            },
+            "steps": {
+              "type": "array",
+              "description": "Steps to rollback the decision",
+              "items": {
+                "type": "string"
+              }
+            },
+            "estimated_time": {
+              "type": "string",
+              "description": "Estimated time to complete rollback"
+            }
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "description": "How this decision will be validated",
+      "properties": {
+        "success_criteria": {
+          "type": "array",
+          "description": "Criteria for successful implementation",
+          "items": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 300
+          }
+        },
+        "metrics": {
+          "type": "array",
+          "description": "Metrics to measure success",
+          "items": {
+            "type": "object",
+            "required": ["metric", "target"],
+            "properties": {
+              "metric": {
+                "type": "string",
+                "description": "Name of the metric"
+              },
+              "target": {
+                "type": "string",
+                "description": "Target value for the metric"
+              },
+              "current": {
+                "type": "string",
+                "description": "Current value of the metric"
+              },
+              "unit": {
+                "type": "string",
+                "description": "Unit of measurement"
+              }
+            }
+          }
+        },
+        "testing": {
+          "type": "object",
+          "description": "Testing approach for validation",
+          "properties": {
+            "test_cases": {
+              "type": "array",
+              "description": "Test cases to validate the decision",
+              "items": {
+                "type": "string"
+              }
+            },
+            "acceptance_criteria": {
+              "type": "array",
+              "description": "Acceptance criteria for the decision",
+              "items": {
+                "type": "string"
+              }
+            },
+            "validation_method": {
+              "type": "string",
+              "description": "Method used to validate the decision"
+            }
+          }
+        }
+      }
+    },
+    "related": {
+      "type": "object",
+      "description": "Related decisions and references",
+      "properties": {
+        "related_decisions": {
+          "type": "array",
+          "description": "Other ADRs related to this decision",
+          "items": {
+            "type": "object",
+            "properties": {
+              "adr_id": {
+                "type": "string",
+                "description": "ID of the related ADR"
+              },
+              "relationship": {
+                "type": "string",
+                "description": "How this ADR relates to the current one",
+                "enum": [
+                  "depends_on",
+                  "supersedes",
+                  "conflicts_with",
+                  "complements",
+                  "extends"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the relationship"
+              }
+            }
+          }
+        },
+        "references": {
+          "type": "array",
+          "description": "External references and documentation",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the reference"
+              },
+              "url": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL to the reference"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "article",
+                  "book",
+                  "paper",
+                  "documentation",
+                  "website",
+                  "video",
+                  "presentation",
+                  "other"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "description": "Brief description of the reference"
+              }
+            }
+          }
+        },
+        "stakeholder_feedback": {
+          "type": "array",
+          "description": "Feedback from stakeholders",
+          "items": {
+            "type": "object",
+            "properties": {
+              "stakeholder": {
+                "type": "string",
+                "description": "Name of the stakeholder"
+              },
+              "feedback": {
+                "type": "string",
+                "description": "Feedback provided"
+              },
+              "date": {
+                "type": "string",
+                "format": "date"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["pending", "addressed", "rejected"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["id", "title", "created", "last_modified"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this ADR",
+          "pattern": "^ADR-\\d{3}$",
+          "examples": ["ADR-001", "ADR-002"]
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the ADR",
+          "minLength": 10,
+          "maxLength": 200
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the ADR was created"
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the ADR was last modified"
+        },
+        "author": {
+          "type": "string",
+          "description": "Author of the ADR"
+        },
+        "reviewers": {
+          "type": "array",
+          "description": "People who reviewed this ADR",
+          "items": {
+            "type": "string"
+          }
+        },
+        "approval_date": {
+          "type": "string",
+          "format": "date",
+          "description": "When the ADR was approved"
+        },
+        "approver": {
+          "type": "string",
+          "description": "Person who approved the ADR"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the ADR",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "tags": {
+          "type": "array",
+          "description": "Tags for categorizing the ADR",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 30
+          },
+          "maxItems": 10
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
